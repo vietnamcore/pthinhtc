@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Press Start 2P', monospace;
+    overflow: hidden;
+  }
+  #lyrics {
+    color: white;
+    font-size: 2em;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div id="lyrics"></div>
+
+<script>
+// Lời nhạc ASCII, không dấu
+const lyrics = [
+  "Co","phai","vi","anh","Van","thuong","vo","y","Chang","suy","nghi","vai","lan","khien","em","u","sau",
+  "Co","phai","vi","anh","Trot","vai","cau","noi","Cham","vao","noi","niem","dau","ma","nguoi","luon","chon","giau",
+  "Vai","cau","noi","co","khien","nguoi","thay","doi","Co","khien","bo","moi","am","em","Nay","chi","con","trong","noi","nho"
+];
+
+let index = 0;
+const lyricsDiv = document.getElementById("lyrics");
+
+// Hiển thị 1 chữ mỗi 0.8 giây
+const interval = setInterval(() => {
+  if(index < lyrics.length){
+    lyricsDiv.textContent = lyrics[index];
+    index++;
+  } else {
+    clearInterval(interval);
+  }
+}, 800);
+</script>
+</body>
+</html>
