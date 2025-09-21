@@ -34,27 +34,18 @@ const lyrics = [
   "Vai","cau","noi","co","khien","nguoi","thay","doi","Co","khien","bo","moi","am","em","Nay","chi","con","trong","noi","nho"
 ];
 
-// Thời gian xuất hiện từng chữ (giây)
-const timings = [
-  0.5,1,1.5,2,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,
-  10,10.5,11,11.5,12,12.5,13,13.5,14,14.5,15,15.5,16,16.5,17,17.5,18,18.5,
-  19,19.5,20,20.5,21,21.5,22,22.5,23,23.5,24,24.5,25,25.5,26,26.5,27,27.5,28,28.5
-];
-
-const lyricsDiv = document.getElementById("lyrics");
 let index = 0;
+const lyricsDiv = document.getElementById("lyrics");
 
-function showNextWord() {
+// Hiển thị 1 chữ mỗi 0.8 giây
+const interval = setInterval(() => {
   if(index < lyrics.length){
     lyricsDiv.textContent = lyrics[index];
     index++;
-    const nextDelay = index < timings.length ? (timings[index] - timings[index-1])*1000 : 0;
-    setTimeout(showNextWord, nextDelay);
+  } else {
+    clearInterval(interval);
   }
-}
-
-// Bắt đầu tự động
-showNextWord();
+}, 800);
 </script>
 </body>
 </html>
