@@ -15,108 +15,46 @@
     height: 100vh;
     font-family: 'Press Start 2P', monospace;
     overflow: hidden;
-    flex-direction: column;
   }
   #lyrics {
     color: white;
     font-size: 2em;
     text-align: center;
   }
-  video {
-    display: none; /* ẩn video, chỉ dùng để đồng bộ nhịp */
-  }
-  button {
-    font-family: 'Press Start 2P', monospace;
-    font-size: 1em;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
 </style>
 </head>
 <body>
-  <button id="startBtn">Play</button>
-  <div id="lyrics"></div>
-  <video id="video" src="video.mp4" muted></video>
+<div id="lyrics"></div>
 
 <script>
-// Lời nhạc không dấu
+// Lời nhạc ASCII, không dấu
 const lyrics = [
-  { time: 0.5, text: "Co" },
-  { time: 1, text: "phai" },
-  { time: 1.5, text: "vi" },
-  { time: 2, text: "anh" },
-  { time: 3, text: "Van" },
-  { time: 3.5, text: "thuong" },
-  { time: 4, text: "vo" },
-  { time: 4.5, text: "y" },
-  { time: 5, text: "Chang" },
-  { time: 5.5, text: "suy" },
-  { time: 6, text: "nghi" },
-  { time: 6.5, text: "vai" },
-  { time: 7, text: "lan" },
-  { time: 7.5, text: "khien" },
-  { time: 8, text: "em" },
-  { time: 8.5, text: "u" },
-  { time: 9, text: "sau" },
-  { time: 10, text: "Co" },
-  { time: 10.5, text: "phai" },
-  { time: 11, text: "vi" },
-  { time: 11.5, text: "anh" },
-  { time: 12, text: "Trot" },
-  { time: 12.5, text: "vai" },
-  { time: 13, text: "cau" },
-  { time: 13.5, text: "noi" },
-  { time: 14, text: "Cham" },
-  { time: 14.5, text: "vao" },
-  { time: 15, text: "noi" },
-  { time: 15.5, text: "niem" },
-  { time: 16, text: "dau" },
-  { time: 16.5, text: "ma" },
-  { time: 17, text: "nguoi" },
-  { time: 17.5, text: "luon" },
-  { time: 18, text: "chon" },
-  { time: 18.5, text: "giau" },
-  { time: 19, text: "Vai" },
-  { time: 19.5, text: "cau" },
-  { time: 20, text: "noi" },
-  { time: 20.5, text: "co" },
-  { time: 21, text: "khien" },
-  { time: 21.5, text: "nguoi" },
-  { time: 22, text: "thay" },
-  { time: 22.5, text: "doi?" },
-  { time: 23, text: "Co" },
-  { time: 23.5, text: "khien" },
-  { time: 24, text: "bo" },
-  { time: 24.5, text: "moi" },
-  { time: 25, text: "am" },
-  { time: 25.5, text: "em?" },
-  { time: 26, text: "Nay" },
-  { time: 26.5, text: "chi" },
-  { time: 27, text: "con" },
-  { time: 27.5, text: "trong" },
-  { time: 28, text: "noi" },
-  { time: 28.5, text: "nho" }
+  "Co","phai","vi","anh","Van","thuong","vo","y","Chang","suy","nghi","vai","lan","khien","em","u","sau",
+  "Co","phai","vi","anh","Trot","vai","cau","noi","Cham","vao","noi","niem","dau","ma","nguoi","luon","chon","giau",
+  "Vai","cau","noi","co","khien","nguoi","thay","doi","Co","khien","bo","moi","am","em","Nay","chi","con","trong","noi","nho"
 ];
 
-const video = document.getElementById("video");
+// Thời gian xuất hiện từng chữ (giây)
+const timings = [
+  0.5,1,1.5,2,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,
+  10,10.5,11,11.5,12,12.5,13,13.5,14,14.5,15,15.5,16,16.5,17,17.5,18,18.5,
+  19,19.5,20,20.5,21,21.5,22,22.5,23,23.5,24,24.5,25,25.5,26,26.5,27,27.5,28,28.5
+];
+
 const lyricsDiv = document.getElementById("lyrics");
-const startBtn = document.getElementById("startBtn");
+let index = 0;
 
-startBtn.addEventListener("click", () => {
-  video.play();
-  startBtn.style.display = "none";
-});
-
-video.addEventListener("timeupdate", () => {
-  const currentTime = video.currentTime;
-  let currentWord = "";
-  for (let i = 0; i < lyrics.length; i++) {
-    if (currentTime >= lyrics[i].time) {
-      currentWord = lyrics[i].text;
-    }
+function showNextWord() {
+  if(index < lyrics.length){
+    lyricsDiv.textContent = lyrics[index];
+    index++;
+    const nextDelay = index < timings.length ? (timings[index] - timings[index-1])*1000 : 0;
+    setTimeout(showNextWord, nextDelay);
   }
-  lyricsDiv.textContent = currentWord;
-});
+}
+
+// Bắt đầu tự động
+showNextWord();
 </script>
 </body>
 </html>
